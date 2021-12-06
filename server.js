@@ -18,7 +18,8 @@ const app = express();
 //     return filteredResults;
 // };
 
-//  ** To filter response  with accouning for some repsonse data being in an []
+//  ** Function for GET 1: To filter response  with accounting for some repsonse data being in an []
+// param = query & animalsArray; arguments = req.query & results in filterByQuery in the GET 1  callback function
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
     //Note that we save the animalsArray as filteredResults here:
@@ -57,14 +58,37 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
 }
 
+// function in prep for GET 2 (11.1.7)
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+};
+
+
+// GET 1: animals GENERAL w/queries
+// GET has 2 arguments a) string of path b) callback function exec each time path accessed
 app.get('/api/animals', (req,res) => {
     let results = animals;
+    // if there is a query then seaerch all of the animals for that query
     if (req.query) {
         results = filterByQuery(req.query, results);
     }
     res.json(results);
 });
 
+
+// GET 2: animals by ID & params (param needs to come AFTER query)
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+    res.json(result);
+    } else {
+        res.send(404);
+    }
+});
+
+
+//  PORT that is actively used open to use port assigned by Heroku (80) or default to 3001
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}`);
 });
