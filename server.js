@@ -1,7 +1,12 @@
 const express = require('express');
 const { animals } = require('./data/animals');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const app = express();
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true}));
+//parse incoming json data
+app.use(express.json());
+
 
 //  ** To Filter Response - original
 // function filterByQuery(query, animalsArray) {
@@ -65,7 +70,7 @@ function findById(id, animalsArray) {
 };
 
 
-// GET 1: animals GENERAL w/queries
+// GET 1: animals GENERAL w/queries use req.query for combining multiple parameters "multifacited"
 // GET has 2 arguments a) string of path b) callback function exec each time path accessed
 app.get('/api/animals', (req,res) => {
     let results = animals;
@@ -77,7 +82,7 @@ app.get('/api/animals', (req,res) => {
 });
 
 
-// GET 2: animals by ID & params (param needs to come AFTER query)
+// GET 2: animals by ID & param: Use req.params to search for SINGLE record (param needs to come AFTER query)
 app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
     if (result) {
@@ -86,6 +91,12 @@ app.get('/api/animals/:id', (req, res) => {
         res.send(404);
     }
 });
+
+app.post('/api/animals', (req, res) => {
+    // req.body is where our incoming content will be 
+    console.log(req.body);
+    res.json(req.body);
+})
 
 
 //  PORT that is actively used open to use port assigned by Heroku (80) or default to 3001
