@@ -139,6 +139,17 @@
         "goofy"
       ],
       "id": "13"
+    },
+    {
+      "name": "Iris",
+      "species": "Doggo",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry",
+        "zany",
+        "goofy"
+      ],
+      "id": "14"
     }
   ]
 }
