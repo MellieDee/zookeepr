@@ -1,15 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+// curly brackets reference destructuring
 const { animals } = require('./data/animals');
+const { dirname } = require('path');
 
 const PORT = process.env.PORT || 3002;
+// TODO: Initialize app variable
 const app = express();
 
+
+//**  MIDDLEWARE  ***/
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 //parse incoming json data
 app.use(express.json());
+
+// for use of local style etc on public folder.
+// We provide a file path to a location in our application (in this case, the public folder)
+// then instruct server to make these files static resources. This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
+app.use(express.static('public'));
+
 
 
 
@@ -132,6 +143,29 @@ app.get('/api/animals/:id', (req, res) => {
     res.send(404);
   }
 });
+
+//  Get 3: for setting index.html and style in public
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+
+// Get 4: setting animals.html
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// Get 5: setting zookeepers.html
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+
+// Get 6: Wildcard The order of your routes matters! The * route should always come last. Otherwise, it will take precedence over named routes, and you won't see what you expect to see on routes like /zookeeper!
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 
 
 // POST route function
