@@ -30,6 +30,7 @@ const getAnimals = (formData = {}) => {
   });
 
   console.log(queryUrl);
+  
 
 //   Remember, when using fetch() we have to check to see if the ok property in the response is true or false. This is the part that will check for any HTTP status code the signifies an error. If there's an error, we just alert the user that there's something wrong. If everything's okay, we still have to use the .json() method to parse our response into readable JSON format.
 
