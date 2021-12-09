@@ -30,24 +30,23 @@ const getAnimals = (formData = {}) => {
   });
 
   console.log(queryUrl);
-  
 
-//   Remember, when using fetch() we have to check to see if the ok property in the response is true or false. This is the part that will check for any HTTP status code the signifies an error. If there's an error, we just alert the user that there's something wrong. If everything's okay, we still have to use the .json() method to parse our response into readable JSON format.
 
-// When that's all done, we send our array of animal data to the printResults() function, where it generates cards for each animal and prints them to the page!
+  //   Remember, when using fetch() we have to check to see if the ok property in the response is true or false. This is the part that will check for any HTTP status code the signifies an error. If there's an error, we just alert the user that there's something wrong. If everything's okay, we still have to use the .json() method to parse our response into readable JSON format.
+
+  // When that's all done, we send our array of animal data to the printResults() function, where it generates cards for each animal and prints them to the page!
 
   fetch(queryUrl)
-  .then(response => {
-    if (!response.ok) {
-      return alert('Error: ' + response.statusText);
-    }
-    return response.json();
-  })
-.then(animalData => {
-  console.log(animalData);
-  printResults(animalData);
-});
-
+    .then(response => {
+      if (!response.ok) {
+        return alert('Error: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(animalData => {
+      console.log(animalData);
+      printResults(animalData);
+    });
 };
 
 const handleGetAnimalsSubmit = event => {

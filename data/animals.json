@@ -150,6 +150,24 @@
         "goofy"
       ],
       "id": "14"
+    },
+    {
+      "name": "Petey",
+      "species": "catto",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "15"
+    },
+    {
+      "name": "Manny",
+      "species": "Penguin",
+      "diet": "piscivore",
+      "personalityTraits": [
+        "goofy"
+      ],
+      "id": "16"
     }
   ]
 }
