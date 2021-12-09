@@ -168,6 +168,15 @@
         "goofy"
       ],
       "id": "16"
+    },
+    {
+      "name": "Sam",
+      "species": "Tucan",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "17"
     }
   ]
 }
