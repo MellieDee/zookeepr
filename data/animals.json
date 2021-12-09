@@ -177,6 +177,15 @@
         "zany"
       ],
       "id": "17"
+    },
+    {
+      "name": "Tony",
+      "species": "Catto",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "18"
     }
   ]
 }
