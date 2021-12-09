@@ -1,6 +1,7 @@
 const { response } = require("express");
-
 const $animalForm = document.querySelector('#animal-form');
+const $zookeeperForm = document.querySelector('#zookeeper-form');
+
 
 const handleAnimalFormSubmit = event => {
   event.preventDefault();
@@ -28,28 +29,29 @@ const handleAnimalFormSubmit = event => {
   }
   const animalObject = { name, species, diet, personalityTraits };
 
-};
-
-fetch('/api/animals', {
-  //     First and most importantly, we have to actually specify what type of request it is and set the method to POST. This will allow the request to make it to the proper endpoint in our server, which is the one we created in the previous lesson to add new animals to the JSON file.
+    //     First and most importantly, we have to actually specify what type of request it is and set the method to POST. This will allow the request to make it to the proper endpoint in our server, which is the one we created in the previous lesson to add new animals to the JSON file.
 
   // Next, we have to tell the request what type of data we're looking to send and then actually provide the data. We set the headers property to inform the request that this is going to be JSON data. That way, we can add stringified JSON data for our animalObject to the body property of the request. Without these, we would never receive req.body on the server!
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(animalObject)
-})
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    alert('Error: ' + response.statusText);
+
+  fetch('/api/animals', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(animalObject)
   })
-  .then(postResponse => {
-    console.log(postResponse);
-    alert('Thank you for adding an animal!');
-  });
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      alert(`Error: ${response.statusText}`);
+    })
+    .then(postResponse => {
+      console.log(postResponse);
+      alert('Thank you for adding an animal!');
+    });
+
+};
 
 $animalForm.addEventListener('submit', handleAnimalFormSubmit);

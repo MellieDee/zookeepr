@@ -11,15 +11,18 @@ const app = express();
 
 
 //**  MIDDLEWARE  ***/
-// parse incoming string or array data
-app.use(express.urlencoded({ extended: true }));
-//parse incoming json data
-app.use(express.json());
 
 // for use of local style etc on public folder.
 // We provide a file path to a location in our application (in this case, the public folder)
 // then instruct server to make these files static resources. This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
 app.use(express.static('public'));
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+//parse incoming json data
+app.use(express.json());
+
+
+
 
 
 
@@ -144,6 +147,32 @@ app.get('/api/animals/:id', (req, res) => {
   }
 });
 
+
+// POST
+
+
+// POST route function
+// req.body is where our incoming content will be 
+// set id based on what next index of the animalsArray will be
+// When we receive new post data to be added to the animals.json file, we'll take the length property of animals array (because it's a one-to-one representation of our animals.json file data)
+//Set that as the id for the new data. Remember, the length property is always going to be one number ahead of the last index of the array so we can avoid any duplicate values.
+
+
+app.post('/api/animals', (req, res) => {
+  // set id based on what the next index of the array will be
+  req.body.id = animals.length.toString();
+
+
+  if (!validateAnimal(req.body)) {
+    res.status(400).send('The animal is not properly formatted.');
+  } else {
+    const animal = createNewAnimal(req.body, animals);
+    res.json(animal);
+  }
+});
+
+
+
 //  Get 3: for setting index.html and style in public
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'));
@@ -168,23 +197,8 @@ app.get('*', (req, res) => {
 
 
 
-// POST route function
-// req.body is where our incoming content will be 
-// set id based on what next index of the animalsArray will be
-// When we receive new post data to be added to the animals.json file, we'll take the length property of animals array (because it's a one-to-one representation of our animals.json file data)
-//Set that as the id for the new data. Remember, the length property is always going to be one number ahead of the last index of the array so we can avoid any duplicate values.
 
-app.post('/api/animals', (req, res) => {
-  // set id based on what the next index of the array will be
-  req.body.id = animals.length.toString();
 
-  if (!validateAnimal(req.body)) {
-    res.status(400).send('The animal is not properly formatted.');
-  } else {
-    const animal = createNewAnimal(req.body, animals);
-    res.json(animal);
-  }
-});
 
 
 //  PORT that is actively used open to use port assigned by Heroku (80) or default to 3002
